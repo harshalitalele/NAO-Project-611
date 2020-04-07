@@ -64,7 +64,7 @@ class MyClass(GeneratedClass):
             page.readline()
             page.readline()
 
-            line=""
+            line="1"
             a_dict={}
             book_page=""
             a_dict[book_page]=[]
