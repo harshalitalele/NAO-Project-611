@@ -14,8 +14,8 @@
     <Timeline enable="0">
       <BehaviorLayer name="behavior_layer1">
         <BehaviorKeyframe name="keyframe1" index="1">
-          <Diagram>
-            <Box name="Python Script" id="1" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="713" y="180">
+          <Diagram scale="200">
+            <Box name="Python Script" id="1" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="132" y="263">
               <bitmap>media/images/box/box-python-script.png</bitmap>
               <script language="4">
                 <content>
@@ -36,7 +36,7 @@ class MyClass(GeneratedClass):
         self.ttsStop = self.session().service('ALTextToSpeech') #Create another service as wait is blocking if audioout is remote
         self.bIsRunning = False
         self.ids = []
-        pass
+
 
     def onUnload(self):
         #put clean-up code here
@@ -47,10 +47,10 @@ class MyClass(GeneratedClass):
                 pass
         while( self.bIsRunning ):
             time.sleep( 0.2 )
-        pass
+
     def onInput_inputP(self, number):
         self.logger.info(number)
-        pass
+
 
     def onInput_onStart(self, p):
         self.bIsRunning = True
@@ -115,7 +115,7 @@ class MyClass(GeneratedClass):
             if( self.ids == [] ):
                 self.onStopped() # activate output of the box
                 self.bIsRunning = False
-        pass
+
 
     def onInput_onStop(self):
         self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
@@ -128,7 +128,7 @@ class MyClass(GeneratedClass):
               <Input name="inputP" type="1" type_size="1" nature="2" inner="0" tooltip="" id="4" />
               <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="5" />
             </Box>
-            <Box name="ShowFarDistanceLeft_01" id="11" localization="8" tooltip="ID : #01A 0015&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- There&#x0A;- Future&#x0A;- Left&#x0A;- Far&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : No&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : LeanRight&#x0A;End stance : LeanRight" x="277" y="58">
+            <Box name="ShowFarDistanceLeft_01" id="11" localization="8" tooltip="ID : #01A 0015&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- There&#x0A;- Future&#x0A;- Left&#x0A;- Far&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : No&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : LeanRight&#x0A;End stance : LeanRight" x="136" y="151">
               <bitmap>media/images/box/movement/move.png</bitmap>
               <script language="4">
                 <content>
@@ -453,7 +453,7 @@ class MyClass(GeneratedClass):
               <Resource name="Standing" type="Lock" timeout="1" />
               <Resource name="All motors" type="Lock" timeout="1" />
             </Box>
-            <Box name="Speech Reco." id="2" localization="8" tooltip="Recognize a word from a list of words set in the box parameters.&#x0A;&#x0A;V1.1.0&#x0A;" x="275" y="197">
+            <Box name="Speech Reco." id="2" localization="8" tooltip="Recognize a word from a list of words set in the box parameters.&#x0A;&#x0A;V1.1.0&#x0A;" x="643" y="10">
               <bitmap>media/images/box/interaction/ear.png</bitmap>
               <script language="4">
                 <content>
@@ -531,16 +531,21 @@ class MyClass(GeneratedClass):
               <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
               <Output name="wordRecognized" type="3" type_size="1" nature="2" inner="0" tooltip="Word recognized with a confidence higher than the threshold set in the box parameters." id="5" />
               <Output name="onNothing" type="1" type_size="1" nature="2" inner="0" tooltip="Nothing has been understood." id="6" />
-              <Parameter name="Word list" inherits_from_parent="0" content_type="3" value="yes;no" default_value="yes;no" custom_choice="0" tooltip="Try to recognize a word from a list of words set in the box parameters." id="7" />
-              <Parameter name="Confidence threshold (%)" inherits_from_parent="0" content_type="1" value="30" default_value="30" min="0" max="100" tooltip="If the confidence associated with the word recognized is below this threshold, the robot will consider that it is not recognized." id="8" />
+              <Parameter name="Word list" inherits_from_parent="0" content_type="3" value="next page;startover;page 1;page 2;page 3;page 4;page 5;page 6;page 7;page 8;page 9;page 10;page 11;page 12;page 13;page 14;page 15;page 16;page 17;page 18;page 19;page 20;" default_value="yes;no" custom_choice="0" tooltip="Try to recognize a word from a list of words set in the box parameters." id="7" />
+              <Parameter name="Confidence threshold (%)" inherits_from_parent="0" content_type="1" value="50" default_value="30" min="0" max="100" tooltip="If the confidence associated with the word recognized is below this threshold, the robot will consider that it is not recognized." id="8" />
               <Parameter name="Enable word spotting" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="If this option is not activated the robot will only understand exact expressions. If it is, he will spot the exact expressions even in the middle of a sentence.&#x0A;&#x0A;!!Warning!! This option is only available with the speech recognition module using Nuance (ie in Atom version of the robot)." id="9" />
               <Resource name="Speech recognition" type="Lock" timeout="0" />
             </Box>
-            <Box name="Say Text" id="3" localization="8" tooltip="Say the text received on its input." x="696" y="396">
+            <Box name="Say Text" id="3" localization="8" tooltip="Say the text received on its input." x="978" y="36">
               <bitmap>media/images/box/interaction/say.png</bitmap>
               <script language="4">
                 <content>
                   <![CDATA[import time
+from urllib2 import urlopen
+import os.path
+from os import path
+import os
+import sys
 
 class MyClass(GeneratedClass):
     def __init__(self):
@@ -551,6 +556,8 @@ class MyClass(GeneratedClass):
         self.ttsStop = self.session().service('ALTextToSpeech') #Create another service as wait is blocking if audioout is remote
         self.bIsRunning = False
         self.ids = []
+
+
 
     def onUnload(self):
         for id in self.ids:
@@ -563,17 +570,72 @@ class MyClass(GeneratedClass):
 
     def onInput_onStart(self, p):
         self.bIsRunning = True
+        last_page_read=1
+        #os.remove("last_page_read.txt")
+        if path.exists("last_page_read.txt"):
+            with open('last_page_read.txt', 'r') as the_file:
+                last_page_read=int(the_file.readline())
+        #last_page_read=14
+        if path.exists("test2.txt"):
+            f = open('test.txt', 'r')
+            result = f.read()
+            f.close()
+        else:
+            page = urlopen('https://raw.githubusercontent.com/harshalitalele/BookReading/master/An%20Idea.txt')
+            page.readline()
+            page.readline()
+
+            line="1"
+            a_dict={}
+            book_page=""
+            a_dict[book_page]=[]
+
+            while line:
+              line = page.readline().decode('utf-8')
+              if "page" in line:
+                book_page = line.replace("-","").rstrip()
+                a_dict[book_page]=[]
+              else:
+                a_dict[book_page].append(line.rstrip())
+
+#            f = open('test.txt', 'w')
+#            f.write(result)
+#            f.close()
+
+
+        sentence = ''
+
         try:
             sentence = "\RSPD="+ str( self.getParameter("Speed (%)") ) + "\ "
             sentence += "\VCT="+ str( self.getParameter("Voice shaping (%)") ) + "\ "
-            sentence += str(p)+"and heyo"
+#            self.logger.info(p)
+            if "next page" in p:
+                last_page_read=last_page_read
+            elif "page" in p:
+                last_page_read=int(p.split(" ")[1])
+            elif "startover" in p:
+                last_page_read=1
+
+            sentence += "Reading page "+str(last_page_read)+"..."
+            sentence += "".join(a_dict["page "+str(last_page_read)])
+
             sentence +=  "\RST\ "
             id = self.tts.pCall("say",str(sentence))
             self.ids.append(id)
             self.tts.wait(id)
+
+            last_page_read += 1
+            if len(a_dict) == last_page_read:
+                self.tts.pCall("say",str("We have finished the book!"))
+                last_page_read=1
+            os.remove("last_page_read.txt")
+            self.logger.info(str(last_page_read))
+            with open('last_page_read.txt', 'w') as the_file:
+                the_file.write(str(last_page_read))
         finally:
             try:
                 self.ids.remove(id)
+
             except:
                 pass
             if( self.ids == [] ):
@@ -593,7 +655,7 @@ class MyClass(GeneratedClass):
               <Resource name="Speech" type="Lock" timeout="0" />
             </Box>
             <Link inputowner="2" indexofinput="2" outputowner="0" indexofoutput="2" />
-            <Link inputowner="1" indexofinput="2" outputowner="2" indexofoutput="5" />
+            <Link inputowner="3" indexofinput="2" outputowner="2" indexofoutput="5" />
           </Diagram>
         </BehaviorKeyframe>
       </BehaviorLayer>
