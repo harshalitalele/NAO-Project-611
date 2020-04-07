@@ -265,7 +265,7 @@ class MyClass(GeneratedClass):
               <Resource name="Standing" type="Lock" timeout="1" />
               <Resource name="All motors" type="Lock" timeout="1" />
             </Box>
-            <Box name="OfferBothHands_HeadNod_LeanLeft_01" id="53" localization="8" tooltip="ID : #01C 0021&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Affirmative&#x0A;- Indicate&#x0A;- Exactly&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : No&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Center&#x0A;End stance : LeanLeft" x="94" y="157">
+            <Box name="OfferBothHands_HeadNod_LeanLeft_01" id="53" localization="8" tooltip="ID : #01C 0021&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Affirmative&#x0A;- Indicate&#x0A;- Exactly&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : No&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : Center&#x0A;End stance : LeanLeft" x="125" y="373">
               <bitmap>media/images/box/movement/move.png</bitmap>
               <script language="4">
                 <content>
