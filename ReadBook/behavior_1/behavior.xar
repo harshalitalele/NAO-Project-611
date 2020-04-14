@@ -14,19 +14,16 @@
     <Timeline enable="0">
       <BehaviorLayer name="behavior_layer1">
         <BehaviorKeyframe name="keyframe1" index="1">
-          <Diagram>
-            <Box name="Python Script" id="1" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="555" y="158">
+          <Diagram scale="141.421">
+            <Box name="Python Script" id="1" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="132" y="263">
               <bitmap>media/images/box/box-python-script.png</bitmap>
               <script language="4">
                 <content>
-                  <![CDATA[from urllib2 import urlopen
-import os.path
-from os import path
-import os
+                  <![CDATA[
 
 class MyClass(GeneratedClass):
     def __init__(self):
-        GeneratedClass.__init__(self)
+        GeneratedClass.__init__(self, False)
 
     def onLoad(self):
         #put initialization code here
@@ -35,7 +32,7 @@ class MyClass(GeneratedClass):
         self.ttsStop = self.session().service('ALTextToSpeech') #Create another service as wait is blocking if audioout is remote
         self.bIsRunning = False
         self.ids = []
-        pass
+
 
     def onUnload(self):
         #put clean-up code here
@@ -46,66 +43,17 @@ class MyClass(GeneratedClass):
                 pass
         while( self.bIsRunning ):
             time.sleep( 0.2 )
-        pass
 
-    def onInput_onStart(self):
-        last_page_read=1
-        #os.remove("last_page_read.txt")
-        if path.exists("last_page_read.txt"):
-            with open('last_page_read.txt', 'r') as the_file:
-                last_page_read=int(the_file.readline())
-        #last_page_read=14
-        if path.exists("test2.txt"):
-            f = open('test.txt', 'r')
-            result = f.read()
-            f.close()
-        else:
-            page = urlopen('https://raw.githubusercontent.com/harshalitalele/BookReading/master/An%20Idea.txt')
-            page.readline()
-            page.readline()
-
-            line="1"
-            a_dict={}
-            book_page=""
-            a_dict[book_page]=[]
-
-            while line:
-              line = page.readline().decode('utf-8')
-              if "page" in line:
-                book_page = line.replace("-","").rstrip()
-                a_dict[book_page]=[]
-              else:
-                a_dict[book_page].append(line.rstrip())
-
-#            f = open('test.txt', 'w')
-#            f.write(result)
-#            f.close()
-
-        self.bIsRunning = True
-        sentence = ''
+    def onInput_onStart(self, p):
         try:
-            sentence += "".join(a_dict["page "+str(last_page_read)])
-            #sentence += str(last_page_read)
-            id = self.tts.pCall("say",str(sentence))
-            id = self.tts.pCall("say",str())
-            self.ids.append(id)
-            self.tts.wait(id)
+            self.ids.remove(id)
 
-        finally:
-            try:
-                self.ids.remove(id)
-                last_page_read += 1
-                if len(a_dict) == last_page_read:
-                    self.tts.pCall("say",str("We have finished the book!"))
-                    last_page_read=1
-                with open('last_page_read.txt', 'w') as the_file:
-                    the_file.write(str(last_page_read))
-            except:
-                pass
-            if( self.ids == [] ):
-                self.onStopped() # activate output of the box
-                self.bIsRunning = False
-        pass
+        except:
+            pass
+        if( self.ids == [] ):
+            self.onStopped() # activate output of the box
+            self.bIsRunning = False
+
 
     def onInput_onStop(self):
         self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
@@ -115,9 +63,10 @@ class MyClass(GeneratedClass):
               <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
               <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
               <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
-              <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+              <Input name="inputP" type="1" type_size="1" nature="2" inner="0" tooltip="" id="4" />
+              <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="5" />
             </Box>
-            <Box name="ShowFarDistanceLeft_01" id="11" localization="8" tooltip="ID : #01A 0015&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- There&#x0A;- Future&#x0A;- Left&#x0A;- Far&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : No&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : LeanRight&#x0A;End stance : LeanRight" x="277" y="58">
+            <Box name="ShowFarDistanceLeft_01" id="11" localization="8" tooltip="ID : #01A 0015&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- There&#x0A;- Future&#x0A;- Left&#x0A;- Far&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : No&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : LeanRight&#x0A;End stance : LeanRight" x="136" y="151">
               <bitmap>media/images/box/movement/move.png</bitmap>
               <script language="4">
                 <content>
@@ -442,7 +391,7 @@ class MyClass(GeneratedClass):
               <Resource name="Standing" type="Lock" timeout="1" />
               <Resource name="All motors" type="Lock" timeout="1" />
             </Box>
-            <Box name="Speech Reco." id="2" localization="8" tooltip="Recognize a word from a list of words set in the box parameters.&#x0A;&#x0A;V1.1.0&#x0A;" x="275" y="197">
+            <Box name="Speech Reco." id="2" localization="8" tooltip="Recognize a word from a list of words set in the box parameters.&#x0A;&#x0A;V1.1.0&#x0A;" x="362" y="0">
               <bitmap>media/images/box/interaction/ear.png</bitmap>
               <script language="4">
                 <content>
@@ -520,12 +469,229 @@ class MyClass(GeneratedClass):
               <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
               <Output name="wordRecognized" type="3" type_size="1" nature="2" inner="0" tooltip="Word recognized with a confidence higher than the threshold set in the box parameters." id="5" />
               <Output name="onNothing" type="1" type_size="1" nature="2" inner="0" tooltip="Nothing has been understood." id="6" />
-              <Parameter name="Word list" inherits_from_parent="0" content_type="3" value="yes;no" default_value="yes;no" custom_choice="0" tooltip="Try to recognize a word from a list of words set in the box parameters." id="7" />
-              <Parameter name="Confidence threshold (%)" inherits_from_parent="0" content_type="1" value="30" default_value="30" min="0" max="100" tooltip="If the confidence associated with the word recognized is below this threshold, the robot will consider that it is not recognized." id="8" />
+              <Parameter name="Word list" inherits_from_parent="0" content_type="3" value="next page;startover;page 1;page 2;page 3;page 4;page 5;page 6;page 7;page 8;page 9;page 10;page 11;page 12;page 13;page 14;page 15;page 16;page 17;page 18;page 19;page 20;" default_value="yes;no" custom_choice="0" tooltip="Try to recognize a word from a list of words set in the box parameters." id="7" />
+              <Parameter name="Confidence threshold (%)" inherits_from_parent="0" content_type="1" value="50" default_value="30" min="0" max="100" tooltip="If the confidence associated with the word recognized is below this threshold, the robot will consider that it is not recognized." id="8" />
               <Parameter name="Enable word spotting" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="If this option is not activated the robot will only understand exact expressions. If it is, he will spot the exact expressions even in the middle of a sentence.&#x0A;&#x0A;!!Warning!! This option is only available with the speech recognition module using Nuance (ie in Atom version of the robot)." id="9" />
               <Resource name="Speech recognition" type="Lock" timeout="0" />
             </Box>
-            <Box name="Say" id="3" localization="8" tooltip="Say some text. The text can be localized." x="770" y="274">
+            <Box name="Say Text" id="3" localization="8" tooltip="Say the text received on its input." x="718" y="1">
+              <bitmap>media/images/box/interaction/say.png</bitmap>
+              <script language="4">
+                <content>
+                  <![CDATA[import time
+from urllib2 import urlopen
+import os.path
+from os import path
+import os
+import sys
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self, False)
+
+    def onLoad(self):
+        self.tts = self.session().service('ALTextToSpeech')
+        self.ttsStop = self.session().service('ALTextToSpeech') #Create another service as wait is blocking if audioout is remote
+        self.bIsRunning = False
+        self.ids = []
+
+
+
+    def onUnload(self):
+        for id in self.ids:
+            try:
+                self.ttsStop.stop(id)
+            except:
+                pass
+        while( self.bIsRunning ):
+            time.sleep( 0.2 )
+
+    def onInput_onStart(self, p):
+        self.bIsRunning = True
+        last_page_read=1
+        #os.remove("last_page_read.txt")
+        if path.exists("last_page_read.txt"):
+            with open('last_page_read.txt', 'r') as the_file:
+                last_page_read=int(the_file.readline())
+        #last_page_read=14
+        if path.exists("test2.txt"):
+            f = open('test.txt', 'r')
+            result = f.read()
+            f.close()
+        else:
+            page = urlopen('https://raw.githubusercontent.com/harshalitalele/BookReading/master/An%20Idea.txt')
+            page.readline()
+            page.readline()
+
+            line="1"
+            a_dict={}
+            book_page=""
+            a_dict[book_page]=[]
+
+            while line:
+              line = page.readline().decode('utf-8')
+              if "page" in line:
+                book_page = line.replace("-","").rstrip()
+                a_dict[book_page]=[]
+              else:
+                a_dict[book_page].append(line.rstrip())
+
+#            f = open('test.txt', 'w')
+#            f.write(result)
+#            f.close()
+
+
+        sentence = ''
+
+        try:
+            sentence = "\RSPD="+ str( self.getParameter("Speed (%)") ) + "\ "
+            sentence += "\VCT="+ str( self.getParameter("Voice shaping (%)") ) + "\ "
+#            self.logger.info(p)
+            if "next page" in p:
+                last_page_read=last_page_read
+            elif "page" in p:
+                last_page_read=int(p.split(" ")[1])
+            elif "startover" in p:
+                last_page_read=1
+
+            sentence += "Reading page "+str(last_page_read)+"..."
+            sentence += "".join(a_dict["page "+str(last_page_read)])
+
+            sentence +=  "\RST\ "
+            id = self.tts.pCall("say",str(sentence))
+
+            self.ids.append(id)
+            self.tts.wait(id)
+
+            last_page_read += 1
+            if len(a_dict) == last_page_read:
+                self.tts.pCall("say",str("We have finished the book!"))
+                last_page_read=1
+            if path.exists("last_page_read.txt"):
+                os.remove("last_page_read.txt")
+            self.logger.info(str(last_page_read))
+            with open('last_page_read.txt', 'w') as the_file:
+                the_file.write(str(last_page_read))
+        finally:
+            try:
+                self.ids.remove(id)
+
+            except:
+                pass
+            if( self.ids == [] ):
+                self.onStopped() # activate output of the box
+                self.bIsRunning = False
+
+    def onInput_onStop(self):
+        self.onUnload()]]>
+                </content>
+              </script>
+              <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
+              <Input name="onStart" type="3" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this Input." id="2" />
+              <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this Input." id="3" />
+              <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when Box behavior is finished." id="4" />
+              <Parameter name="Voice shaping (%)" inherits_from_parent="1" content_type="1" value="98" default_value="100" min="50" max="150" tooltip='Used to modify at runtime the voice feature (tone, speed). In a slighty&#x0A;different way than pitch and speed, it gives a kind of &quot;gender or age&#x0A;modification&quot; effect.&#x0A;&#x0A;For instance, a quite good male derivation of female voice can be&#x0A;obtained setting this parameter to 78%.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the&#x0A;speed parameter. For example, if you want to decrease by 20% the voice&#x0A;shaping, you will have to increase by 20% the speed to keep a constant&#x0A;average speed.' id="5" />
+              <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="98" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
+              <Resource name="Speech" type="Lock" timeout="0" />
+            </Box>
+            <Box name="Bumpers" id="4" localization="8" tooltip="Listen to bumpers sensors. Stimulate onLeft or onRight output depending on&#x0A;which bumper is stimulated." x="434" y="110">
+              <bitmap>media/images/box/movement/move_foot.png</bitmap>
+              <bitmap>media/images/box/movement/move_leftfoot.png</bitmap>
+              <script language="4">
+                <content>
+                  <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self, False)
+
+    def onLoad(self):
+        self.bIsRunning = False
+
+    def onUnload(self):
+        self.bIsRunning = False
+
+    def onInput_onStart(self):
+        self.bIsRunning = True
+
+    def onInput_onStop(self):
+        if( self.bIsRunning ):
+            self.onUnload()
+            self.onStopped()]]>
+                </content>
+              </script>
+              <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+              <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+              <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+              <Input name="LeftBumperPressed" type="0" type_size="1" nature="4" stm_value_name="LeftBumperPressed" inner="1" tooltip="Connected to ALMemory. Will be stimulated every time the value subscribed to changes, respecting the refresh period." id="4" />
+              <Input name="RightBumperPressed" type="0" type_size="1" nature="4" stm_value_name="RightBumperPressed" inner="1" tooltip="Connected to ALMemory. Will be stimulated every time the value subscribed to changes, respecting the refresh period." id="5" />
+              <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is stopped." id="6" />
+              <Output name="onLeft" type="1" type_size="1" nature="2" inner="0" tooltip="When left bumper is stimulated." id="7" />
+              <Output name="onRight" type="1" type_size="1" nature="2" inner="0" tooltip="When right bumper is stimulated." id="8" />
+              <Timeline enable="0">
+                <BehaviorLayer name="behavior_layer1">
+                  <BehaviorKeyframe name="keyframe1" index="1">
+                    <Diagram>
+                      <Box name="If &gt; 0" id="2" localization="8" tooltip="Transmit only if value is &gt; 0." x="196" y="61">
+                        <bitmap>media/images/box/box-diagram.png</bitmap>
+                        <script language="4">
+                          <content>
+                            <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self, False)
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        pass
+
+    def onUnload(self):
+        #~ puts code for box cleanup here
+        pass
+
+    def onInput_onStart(self, p):
+        if(p > 0):
+            self.onStopped() #~ activate output of the box
+        pass]]>
+                          </content>
+                        </script>
+                        <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                        <Input name="onStart" type="0" type_size="1" nature="1" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                        <Output name="onStopped" type="1" type_size="1" nature="2" inner="0" tooltip="Signal sent when box behavior is finished." id="3" />
+                      </Box>
+                      <Box name="If &gt; 0" id="4" localization="8" tooltip="Transmit only if value is &gt; 0." x="197" y="165">
+                        <bitmap>media/images/box/box-diagram.png</bitmap>
+                        <script language="4">
+                          <content>
+                            <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self, False)
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        pass
+
+    def onUnload(self):
+        #~ puts code for box cleanup here
+        pass
+
+    def onInput_onStart(self, p):
+        if(p > 0):
+            self.onStopped() #~ activate output of the box
+        pass]]>
+                          </content>
+                        </script>
+                        <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                        <Input name="onStart" type="0" type_size="1" nature="1" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                        <Output name="onStopped" type="1" type_size="1" nature="2" inner="0" tooltip="Signal sent when box behavior is finished." id="3" />
+                      </Box>
+                      <Link inputowner="2" indexofinput="2" outputowner="0" indexofoutput="4" />
+                      <Link inputowner="0" indexofinput="7" outputowner="2" indexofoutput="3" />
+                      <Link inputowner="4" indexofinput="2" outputowner="0" indexofoutput="5" />
+                      <Link inputowner="0" indexofinput="8" outputowner="4" indexofoutput="3" />
+                    </Diagram>
+                  </BehaviorKeyframe>
+                </BehaviorLayer>
+              </Timeline>
+            </Box>
+            <Box name="Say" id="6" localization="8" tooltip="Say some text. The text can be localized." x="292" y="454">
               <bitmap>media/images/box/interaction/say.png</bitmap>
               <script language="4">
                 <content>
@@ -582,8 +748,10 @@ class MyClass(GeneratedClass):
               <Parameter name="Text" inherits_from_parent="0" content_type="5" value="Hello" default_value="" tooltip="The text you want to say. Don&apos;t forget to translate it!" id="7" />
               <Resource name="Speech" type="Lock" timeout="0" />
             </Box>
+            <Link inputowner="3" indexofinput="2" outputowner="2" indexofoutput="5" />
             <Link inputowner="2" indexofinput="2" outputowner="0" indexofoutput="2" />
-            <Link inputowner="1" indexofinput="2" outputowner="2" indexofoutput="5" />
+            <Link inputowner="4" indexofinput="2" outputowner="0" indexofoutput="2" />
+            <Link inputowner="3" indexofinput="3" outputowner="4" indexofoutput="7" />
           </Diagram>
         </BehaviorKeyframe>
       </BehaviorLayer>

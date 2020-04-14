@@ -9,5 +9,10 @@
             <comment>Text</comment>
             <translation>Hello</translation>
         </message>
+        <message>
+            <source>ouch</source>
+            <comment>Text</comment>
+            <translation type="obsolete">ouch</translation>
+        </message>
     </context>
 </TS>
